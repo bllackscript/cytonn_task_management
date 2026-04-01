@@ -64,29 +64,29 @@ A Task Management RESTful API built with Laravel and MySQL.
 
 ---
 
-## 🌐 Deployment Instructions (e.g., Render / Railway)
+## 🌐 Deployment Instructions (Render.com)
 
-Below is an outline of how you can host this project online.
+This project is configured for automated deployment on **Render.com** using Docker and the included `render.yaml` blueprint.
 
-### 1. Database Provisioning
-- Go to your hosting platform (Railway/Render) and provision a **MySQL Database**.
-- Retrieve the connection credentials (Host, Port, User, Password, Database Name).
+### 1. Push to GitHub/GitLab
+Ensure all your changes (including `Dockerfile`, `render.yaml`, and `nginx/default.conf`) are committed and pushed to your remote repository.
 
-### 2. Configure Environment Variables
-In your hosting platform's service settings, map the Laravel `.env` variables to your provisioned database credentials:
-- `DB_CONNECTION=mysql`
-- `DB_HOST=...`
-- `DB_PORT=...`
-- `DB_DATABASE=...`
-- `DB_USERNAME=...`
-- `DB_PASSWORD=...`
-- `APP_KEY` (must be copied securely or regenerated for production).
+### 2. Deploy using Blueprint
+1.  Log in to your [Render Dashboard](https://dashboard.render.com).
+2.  Click **New +** and select **Blueprint**.
+3.  Connect your GitHub/GitLab repository.
+4.  Render will automatically detect the `render.yaml` file and propose creating:
+    -   A **PostgreSQL** database (`task-database`).
+    -   A **Web Service** (`task-management-api`).
+5.  Click **Apply**.
 
-### 3. Build & Run Steps
-Using a standard PHP/Laravel web service build template or a Docker setup:
-* **Build command:** `composer install --no-dev --optimize-autoloader`
-* **Pre-deploy Command:** `php artisan migrate --force`
-* **Start Command:** Depending on the runner (e.g. Apache/Nginx webroot mapping or native server), `php artisan serve --host=0.0.0.0 --port=$PORT`
+### 3. Final Configuration
+Once the services are being created:
+1.  Go to the **Web Service** settings.
+2.  In the **Environment** tab, ensure you have an `APP_KEY`. You can generate one locally using `php artisan key:generate --show` and paste it into the `APP_KEY` variable on Render.
+3.  Render will automatically run migrations and optimize the application using the `scripts/render-deploy.sh` script defined in the Dockerfile.
+
+---
 
 ---
 
