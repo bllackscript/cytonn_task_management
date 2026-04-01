@@ -65,5 +65,5 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
 # Expose port (Render uses 10000 by default, but we can use PORT env var)
 EXPOSE 10000
 
-# Start Nginx and PHP-FPM
-CMD ["sh", "-c", "php-fpm -D && nginx -g 'daemon off;'"]
+# Start Render Deploy Script, Nginx, and PHP-FPM
+CMD ["sh", "-c", "render-deploy.sh && php-fpm -D && nginx -g 'daemon off;'"]
